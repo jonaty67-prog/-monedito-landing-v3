@@ -40,7 +40,7 @@ class ThemeSwitcher {
   constructor() {
     this.btns    = document.querySelectorAll('.ts-btn');
     this.body    = document.body;
-    this.current = localStorage.getItem('monedito-theme') || 'pink';
+    this.current = localStorage.getItem('monedito-theme') || 'dark';
     this.apply(this.current, false);
     this.btns.forEach(btn => btn.addEventListener('click', () => {
       if (btn.dataset.theme !== this.current) this.apply(btn.dataset.theme, true);
