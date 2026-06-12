@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monedito — Tu dinero, controlado por voz</title>
+  <meta name="description" content="Monedito: registra tus gastos con voz, crea metas y recibe análisis automáticos con IA. Gratis para siempre." />
+  <meta property="og:title" content="Monedito — Tu dinero, controlado por voz" />
+  <meta property="og:description" content="Registra gastos con voz, crea metas y recibe análisis automáticos con IA. Gratis para siempre." />
+  <meta property="og:image" content="logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Monedito — Tu dinero, controlado por voz" />
+  <meta name="twitter:description" content="Registra gastos con voz, crea metas y recibe análisis automáticos con IA. Gratis para siempre." />
+  <meta name="twitter:image" content="logo.png" />
+  <meta name="theme-color" content="#884c5d" />
+  <link rel="canonical" href="/" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body data-theme="pink" data-mode="gastos">
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<div class="theme-switcher" id="themeSwitcher">
+  <button class="ts-btn ts-btn--active" data-theme="pink" title="Rosa"></button>
+  <button class="ts-btn" data-theme="blue" title="Azul"></button>
+  <button class="ts-btn" data-theme="dark" title="Oscuro"></button>
+</div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#" class="brand">
+      <img src="logo.png" alt="Monedito" class="brand__img" width="30" height="30" />
+      <span class="brand__name">monedito</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="#features">Funciones</a></li>
+      <li><a href="#how">Cómo funciona</a></li>
+      <li><a href="#pricing">Precios</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav__right">
+      <a href="#download" class="nav__cta">Descargar gratis</a>
+    </div>
+    <button class="nav__burger" id="navBurger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features">Funciones</a>
+    <a href="#how">Cómo funciona</a>
+    <a href="#pricing">Precios</a>
+    <a href="#faq">FAQ</a>
+    <a href="#download" class="btn btn--primary">Descargar gratis</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+  <div class="orb orb--3"></div>
+
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <div class="eyebrow hero__eyebrow">
+        <span class="dot"></span>
+        tu plata, clara.
+      </div>
+      <h1>Habla.<br><span class="text-grad" id="heroTyper">La IA registra todo.</span><span class="typer-cursor" aria-hidden="true"></span></h1>
+      <p class="hero__sub">Hablale a la IA — registra tus gastos, analiza patrones y te reporta por WhatsApp.</p>
+
+      <div class="voice-wrap">
+        <button class="voice-btn" id="voiceBtn" aria-label="Ver demo de voz">
+          <span class="v-ring"></span>
+          <span class="v-ring"></span>
+          <span class="v-ring"></span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+        <div class="voice-hint">
+          <strong>Probá el demo</strong>
+          <span>Así de simple es registrar gastos</span>
+        </div>
+
+        <!-- Tooltip demo — sin overlay, se cierra solo -->
+        <div class="vd" id="voiceDemo" aria-live="polite" aria-hidden="true">
+          <div class="vd__top">
+            <span class="vd__dot" id="vdDot"></span>
+            <span class="vd__status" id="vdStatus">Escuchando...</span>
+          </div>
+          <div class="vd__wave" id="vdWave">
+            <span style="--h:14px"></span><span style="--h:28px"></span>
+            <span style="--h:20px"></span><span style="--h:36px"></span>
+            <span style="--h:24px"></span><span style="--h:40px"></span>
+            <span style="--h:18px"></span><span style="--h:32px"></span>
+            <span style="--h:22px"></span><span style="--h:16px"></span>
+            <span style="--h:30px"></span>
+          </div>
+          <p class="vd__user" id="vdUser"></p>
+          <div class="vd__response" id="vdResponse">
+            <div class="vd__av">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <p class="vd__bubble" id="vdBubble"></p>
+          </div>
+        </div>
+      </div>
+
+      <p class="hero__form-label">Lista de espera · Lanzamiento 2026</p>
+      <div class="inline-signup open" id="inlineSignup">
+        <form class="inline-signup__form" id="inlineForm" novalidate>
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:0;height:0;overflow:hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
+          <input type="email" placeholder="tu@email.com" autocomplete="email" required />
+          <button type="submit">Unirme a la lista</button>
+        </form>
+        <p class="inline-signup__success" id="inlineSuccess">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+          Listo — te avisamos cuando esté disponible.
+        </p>
+      </div>
+      <p class="form-consent">Al suscribirte aceptás nuestra <a href="privacy.html" class="form-consent__link">política de privacidad</a>.</p>
+
+      <div class="hero__stores">
+        <a href="#download" class="store">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div><small>Próximamente en</small><strong>App Store</strong></div>
+        </a>
+        <a href="#download" class="store">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.28.15.59.19.9.14l12.19-7.03-2.68-2.68-10.41 9.57zm-1.9-20.7C1.1 3.4 1 3.74 1 4.1v15.8c0 .36.1.7.28 1.04l.06.06 8.84-8.84v-.21L1.28 3.06zm17.44 9.56-2.98-1.72-2.98 1.72 2.98 2.98 2.98-2.98zm-2.98-4.56L3.55.5c-.31-.18-.65-.22-.97-.12l10.16 9.68 2.98-1.99v-.01z"/></svg>
+          <div><small>Próximamente en</small><strong>Google Play</strong></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+
+      <!-- Nav -->
+      <div class="phone-nav" id="phoneNav">
+        <button class="phone-nav__btn phone-nav__btn--active" data-idx="0">Dashboard</button>
+        <button class="phone-nav__btn" data-idx="1">Chat IA</button>
+        <button class="phone-nav__btn" data-idx="2">Metas</button>
+      </div>
+
+      <div class="phone-stage" id="phoneStage">
+
+        <!-- ─── CARD 0: Dashboard + tilt 3D + chips flotantes ─── -->
+        <div class="phone-card phone-card--active tilt-card" data-idx="0">
+          <div class="float-chips" aria-hidden="true">
+            <div class="float-chip fc--1">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Gasto registrado — $350
+            </div>
+            <div class="float-chip fc--2">
+              Ahorro del mes +$1,240
+            </div>
+            <div class="float-chip fc--3">
+              Presupuesto 76%
+            </div>
+          </div>
+          <div class="iphone-mockup" id="iphoneMockup">
+            <div class="iphone-island"></div>
+            <div class="iphone-screen">
+              <div class="sw-state sw-state--gastos" id="swGastos">
+                <div class="sw-topbar">
+                  <span class="sw-period">Mayo 2026</span>
+                  <span class="sw-badge sw-badge--gastos">Gastos</span>
+                </div>
+                <div class="sw-amount sw-amount--gastos" data-usd="-3840">-$3,840</div>
+                <div class="sw-sub">del presupuesto mensual</div>
+                <div class="sw-progress-wrap">
+                  <div class="sw-progress-bar"><div class="sw-progress-fill sw-fill--gastos" style="width:76%"></div></div>
+                  <span class="sw-progress-pct">76%</span>
+                </div>
+                <div class="sw-rows">
+                  <div class="sw-row">
+                    <span class="sw-row-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></span>
+                    <div class="sw-row-info"><span class="sw-row-name">Comida</span><div class="sw-row-bar"><div style="width:32%;background:linear-gradient(90deg,#f87171,#fca5a5)"></div></div></div>
+                    <span class="sw-row-amt" data-usd="1228">$1,228</span>
+                  </div>
+                  <div class="sw-row">
+                    <span class="sw-row-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+                    <div class="sw-row-info"><span class="sw-row-name">Hogar</span><div class="sw-row-bar"><div style="width:24%;background:linear-gradient(90deg,#fb923c,#fdba74)"></div></div></div>
+                    <span class="sw-row-amt" data-usd="921">$921</span>
+                  </div>
+                  <div class="sw-row">
+                    <span class="sw-row-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                    <div class="sw-row-info"><span class="sw-row-name">Transporte</span><div class="sw-row-bar"><div style="width:18%;background:linear-gradient(90deg,#fbbf24,#fde68a)"></div></div></div>
+                    <span class="sw-row-amt" data-usd="691">$691</span>
+                  </div>
+                  <div class="sw-row">
+                    <span class="sw-row-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+                    <div class="sw-row-info"><span class="sw-row-name">Ocio</span><div class="sw-row-bar"><div style="width:12%;background:linear-gradient(90deg,#c084fc,#e9d5ff)"></div></div></div>
+                    <span class="sw-row-amt" data-usd="461">$461</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sw-state sw-state--ingresos" id="swIngresos">
+                <div class="sw-topbar">
+                  <span class="sw-period">Mayo 2026</span>
+                  <span class="sw-badge sw-badge--ingresos">Ingresos</span>
+                </div>
+                <div class="sw-amount sw-amount--ingresos" data-usd="8200" data-sign="+">+$8,200</div>
+                <div class="sw-sub">ingresados este mes</div>
+                <div class="sw-savings-card">
+                  <div><div class="sw-savings-label">Ahorro neto</div><div class="sw-savings-val" data-usd="4360" data-sign="+">+$4,360</div></div>
+                  <div class="sw-savings-pct">53%</div>
+                </div>
+                <div class="sw-rows">
+                  <div class="sw-row">
+                    <span class="sw-row-ico sw-row-ico--green"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
+                    <div class="sw-row-info"><span class="sw-row-name">Salario</span><div class="sw-row-bar"><div style="width:79%;background:linear-gradient(90deg,#4ade80,#86efac)"></div></div></div>
+                    <span class="sw-row-amt" data-usd="6500">$6,500</span>
+                  </div>
+                  <div class="sw-row">
+                    <span class="sw-row-ico sw-row-ico--green"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+                    <div class="sw-row-info"><span class="sw-row-name">Freelance</span><div class="sw-row-bar"><div style="width:15%;background:linear-gradient(90deg,#34d399,#a7f3d0)"></div></div></div>
+                    <span class="sw-row-amt" data-usd="1200">$1,200</span>
+                  </div>
+                  <div class="sw-row">
+                    <span class="sw-row-ico sw-row-ico--green"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span>
+                    <div class="sw-row-info"><span class="sw-row-name">Inversiones</span><div class="sw-row-bar"><div style="width:6%;background:linear-gradient(90deg,#86efac,#d1fae5)"></div></div></div>
+                    <span class="sw-row-amt" data-usd="500">$500</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sw-control-wrap">
+              <p class="sw-control-label" id="swControlLabel">Gastos</p>
+              <div class="sw-track" id="swTrack">
+                <div class="sw-thumb" id="swThumb"><img src="logo.png" alt="" draggable="false" width="24" height="24" /></div>
+                <div class="sw-arrows" id="swArrows"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <div class="iphone-home-bar"></div>
+          </div>
+        </div>
+
+        <!-- ─── CARD 1: Chat IA — demo de voz interactivo ─── -->
+        <div class="phone-card" data-idx="1">
+          <div class="voice-stage">
+            <div class="iphone-mockup">
+              <div class="iphone-island"></div>
+              <div class="iphone-screen vc">
+                <div class="vc__head">
+                  <div class="vc__av">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                  </div>
+                  <div>
+                    <span class="vc__name">Monedito IA</span>
+                    <span class="vc__online">En línea</span>
+                  </div>
+                </div>
+                <div class="vc__msgs" id="vcMsgs">
+                  <div class="vc__msg vc__msg--ai vc__msg--greeting">
+                    <div class="vc__msg-ico">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="vc__msg-bubble">¡Hola! Cuéntame lo que gastaste o pregúntame sobre tu plata.</div>
+                  </div>
+                </div>
+                <div class="vc__bottom">
+                  <div class="vc__wave-wrap" id="vcWaveWrap">
+                    <div class="vc__bar-wave">
+                      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <button class="vc__mic" id="vcMicBtn" aria-label="Hablar con Monedito IA">
+                    <span class="vc__ring"></span>
+                    <span class="vc__ring"></span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                      <line x1="12" y1="19" x2="12" y2="23"/>
+                    </svg>
+                  </button>
+                  <span class="vc__hint" id="vcHint">Toca para hablar</span>
+                </div>
+              </div>
+              <div class="iphone-home-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── CARD 2: Metas — glow rings ─── -->
+        <div class="phone-card" data-idx="2">
+          <div class="glow-stage">
+            <div class="glow-ring gr--1"></div>
+            <div class="glow-ring gr--2"></div>
+            <div class="glow-ring gr--3"></div>
+            <div class="iphone-mockup">
+              <div class="iphone-island"></div>
+              <div class="iphone-screen gm" style="background:#fafafa">
+                <div class="gm__head">
+                  <span class="gm__title">Mis metas</span>
+                  <div class="gm__head-right">
+                    <span class="gm__period">Mayo 2026</span>
+                    <button class="gm__add-btn" aria-label="Nueva meta">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="gm__summary">
+                  <div class="gm__ring-wrap">
+                    <svg viewBox="0 0 120 120" width="78" height="78">
+                      <defs>
+                        <linearGradient id="ringGrad" x1="0" y1="1" x2="1" y2="0">
+                          <stop offset="0%" stop-color="#884c5d"/>
+                          <stop offset="100%" stop-color="#ffb3c6"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="60" cy="60" r="50" stroke="#f0e4e8" stroke-width="9" fill="none"/>
+                      <circle cx="60" cy="60" r="50" stroke="url(#ringGrad)" stroke-width="9" fill="none"
+                        stroke-dasharray="314" stroke-dashoffset="85" stroke-linecap="round"
+                        transform="rotate(-90 60 60)" class="gm-arc"/>
+                    </svg>
+                    <div class="gm__ring-label"><strong>73%</strong><span>listo</span></div>
+                  </div>
+                  <div class="gm__summary-stats">
+                    <div class="gm__stat-row">
+                      <span class="gm__stat-val">$27.7M</span>
+                      <span class="gm__stat-lbl">ahorrado</span>
+                    </div>
+                    <div class="gm__stat-row">
+                      <span class="gm__stat-val gm__stat-val--green">$18.3M</span>
+                      <span class="gm__stat-lbl">restante</span>
+                    </div>
+                    <div class="gm__stat-badge">3 metas activas</div>
+                  </div>
+                </div>
+
+                <div class="gm__goals">
+                  <div class="gm__goal" data-pct="72">
+                    <div class="gm__goal-top">
+                      <div class="gm__goal-ico gm__goal-ico--pink">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.27a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      </div>
+                      <div class="gm__goal-info">
+                        <span class="gm__goal-name">Viaje a Europa</span>
+                        <span class="gm__goal-detail">$18M / $25M · $900K/sem</span>
+                      </div>
+                      <span class="gm__goal-pct">72%</span>
+                    </div>
+                    <div class="gm__bar"><div style="width:72%;background:linear-gradient(90deg,#884c5d,#ffb3c6)"></div></div>
+                  </div>
+
+                  <div class="gm__goal" data-pct="47">
+                    <div class="gm__goal-top">
+                      <div class="gm__goal-ico gm__goal-ico--green">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                      </div>
+                      <div class="gm__goal-info">
+                        <span class="gm__goal-name">Fondo emergencia</span>
+                        <span class="gm__goal-detail">$7M / $15M · $600K/sem</span>
+                      </div>
+                      <span class="gm__goal-pct">47%</span>
+                    </div>
+                    <div class="gm__bar"><div style="width:47%;background:linear-gradient(90deg,#34d399,#86efac)"></div></div>
+                  </div>
+
+                  <div class="gm__goal" data-pct="45">
+                    <div class="gm__goal-top">
+                      <div class="gm__goal-ico gm__goal-ico--blue">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                      </div>
+                      <div class="gm__goal-info">
+                        <span class="gm__goal-name">iPhone 16 Pro</span>
+                        <span class="gm__goal-detail">$2.7M / $6M · $240K/sem</span>
+                      </div>
+                      <span class="gm__goal-pct">45%</span>
+                    </div>
+                    <div class="gm__bar"><div style="width:45%;background:linear-gradient(90deg,#818cf8,#c4b5fd)"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="iphone-home-bar"></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /phone-stage -->
+    </div><!-- /hero__visual -->
+  </div>
+</section>
+
+<!-- ═══ FEATURE STRIP ═══ -->
+<div class="strip">
+  <div class="wrap strip__inner">
+    <div class="strip__pill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+      Registro por voz
+    </div>
+    <div class="strip__pill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Cifrado AES-256
+    </div>
+    <div class="strip__pill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      iOS &amp; Android
+    </div>
+    <div class="strip__pill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Gratis para siempre
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PARA QUIÉN ═══ -->
+<section class="social-proof" id="social-proof">
+  <div class="wrap">
+    <div class="sp__stat">
+      <span class="sp__meta">Monedito es para vos si...</span>
+    </div>
+    <div class="sp__grid">
+
+      <div class="sp-card">
+        <div class="sp-card__top">
+          <div class="sp-card__av" style="background:#884c5d">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="sp-card__info">
+            <span class="sp-card__name">Nunca llevaste las cuentas</span>
+            <span class="sp-card__city">Sin planilla, sin hábito previo</span>
+          </div>
+        </div>
+        <p class="sp-card__quote">No necesitás saber de finanzas. Solo contale lo que gastaste y Monedito categoriza, analiza y te avisa.</p>
+      </div>
+
+      <div class="sp-card">
+        <div class="sp-card__top">
+          <div class="sp-card__av" style="background:#2f6df6">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="sp-card__info">
+            <span class="sp-card__name">Tus ingresos son variables</span>
+            <span class="sp-card__city">Freelancer, emprendedor, autónomo</span>
+          </div>
+        </div>
+        <p class="sp-card__quote">Monedito ajusta tu presupuesto según lo que ganás cada mes y te avisa cuándo estás gastando de más.</p>
+      </div>
+
+      <div class="sp-card">
+        <div class="sp-card__top">
+          <div class="sp-card__av" style="background:#16a34a">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div class="sp-card__info">
+            <span class="sp-card__name">Tenés una meta concreta</span>
+            <span class="sp-card__city">Viaje, fondo de emergencia, gadget</span>
+          </div>
+        </div>
+        <p class="sp-card__quote">Decile qué querés lograr. Monedito calcula cuánto ahorrar por semana y te mantiene en camino hasta llegar.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CREDIBILIDAD ═══ -->
+<div class="cred-strip">
+  <div class="wrap cred-strip__inner">
+    <div class="cred-item">
+      <svg class="cred-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Hecho en Colombia
+    </div>
+    <div class="cred-item">
+      <svg class="cred-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Privacidad garantizada
+    </div>
+    <div class="cred-item">
+      <svg class="cred-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+      Sin venta de datos
+    </div>
+    <div class="cred-item">
+      <svg class="cred-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      iOS · Android · Web
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FEATURES ═══ -->
+<div id="features">
+
+  <section class="feature feature--white">
+    <div class="feature__num feature--num-right">01</div>
+    <div class="wrap feature__grid">
+      <div class="feature__copy">
+        <span class="sec-tag">Registro por voz</span>
+        <h2>Registra con<br><span class="text-grad">tu voz</span></h2>
+        <p class="lead">Di lo que gastaste en lenguaje natural. Monedito entiende el contexto, categoriza automáticamente y te confirma al instante. Sin tocar nada.</p>
+        <ul class="feature__list">
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Lenguaje natural — sin comandos específicos
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Categorización automática con IA
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Consultas sobre tus gastos en tiempo real
+          </li>
+        </ul>
+      </div>
+      <div class="feature__visual">
+        <div class="chat-card">
+          <div class="chat-card__head">
+            <div class="avatar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+            </div>
+            <span>Monedito IA</span>
+            <span class="chat-online">En línea</span>
+          </div>
+          <div class="chat-body">
+            <div class="chat-msg chat-msg--user">
+              <span class="chat-mic">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+              </span>
+              <div class="chat-bubble chat-bubble--user">"Gasté $350 en el súper hoy"</div>
+            </div>
+            <div class="chat-msg chat-msg--ai">
+              <div class="chat-av">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="chat-bubble chat-bubble--ai">Listo — Registré <strong>$350</strong> en Comida. Llevas <strong>76%</strong> del presupuesto.</div>
+            </div>
+            <div class="chat-msg chat-msg--user">
+              <span class="chat-mic">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+              </span>
+              <div class="chat-bubble chat-bubble--user">"¿Cuánto gasté en comida este mes?"</div>
+            </div>
+            <div class="chat-msg chat-msg--ai">
+              <div class="chat-av">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="chat-bubble chat-bubble--ai">$1,228 en comida — <strong>8% menos</strong> que el mes pasado.</div>
+            </div>
+            <div class="chat-msg chat-msg--user">
+              <span class="chat-mic">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+              </span>
+              <div class="chat-bubble chat-bubble--user">"Pagué el alquiler, $1,200"</div>
+            </div>
+            <div class="chat-msg chat-msg--ai">
+              <div class="chat-av">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="chat-bubble chat-bubble--ai">Registrado — <strong>$1,200</strong> en Hogar. Tu gasto fijo más grande del mes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature feature--soft">
+    <div class="feature__num feature--num-left">02</div>
+    <div class="wrap feature__grid feature__grid--reverse">
+      <div class="feature__visual">
+        <div class="viz-card">
+          <div class="viz-card__head">
+            <div>
+              <span class="viz-card__title">Tendencia de ahorro</span>
+              <p class="viz-card__big">$4.360.000</p>
+            </div>
+            <span class="viz-card__delta">+23% este mes</span>
+          </div>
+          <svg class="spark" viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#884c5d" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#884c5d" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="area" d="M0,68 L36,56 L72,62 L108,30 L144,36 L180,16 L220,22 L220,80 L0,80 Z"/>
+            <path class="line" d="M0,68 L36,56 L72,62 L108,30 L144,36 L180,16 L220,22"/>
+            <circle cx="180" cy="16" r="4"/>
+          </svg>
+          <div class="insight">
+            <span class="ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </span>
+            <div><strong>Gastos en comida</strong><span>Bajaron 8% vs. el mes pasado</span></div>
+          </div>
+          <div class="insight">
+            <span class="ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </span>
+            <div><strong>Subscripciones duplicadas</strong><span>Detecté 2 cobros similares</span></div>
+          </div>
+          <div class="insight">
+            <span class="ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </span>
+            <div><strong>Proyección mensual</strong><span>Vas a ahorrar $4.200.000 si mantienes el ritmo</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="feature__copy">
+        <span class="sec-tag">Inteligencia artificial</span>
+        <h2>Análisis<br><span class="text-grad">automático</span></h2>
+        <p class="lead">La IA detecta patrones antes de que los notes — gastos que suben, suscripciones duplicadas, oportunidades de ahorro. Todo sin que hagas nada.</p>
+        <ul class="feature__list">
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Detección de gastos inusuales o duplicados
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Predicción de gastos futuros
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Reportes semanales automáticos por WhatsApp
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature feature--white">
+    <div class="feature__num feature--num-right">03</div>
+    <div class="wrap feature__grid">
+      <div class="feature__copy">
+        <span class="sec-tag">Metas de ahorro</span>
+        <h2>Metas que<br><span class="text-grad">se cumplen</span></h2>
+        <p class="lead">Dile a Monedito qué quieres lograr. La IA calcula cuánto necesitas ahorrar por semana, te avisa cuando te desvías y celebra cada hito.</p>
+        <ul class="feature__list">
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Crea metas hablando — sin formularios
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Cálculo automático de ahorro semanal
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Alertas inteligentes de progreso
+          </li>
+        </ul>
+      </div>
+      <div class="feature__visual">
+        <div class="goals-card">
+          <div class="goal">
+            <div class="goal__top">
+              <div class="goal__ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.27a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div class="goal__meta">
+                <span class="goal__name">Viaje a Europa</span>
+                <span class="goal__sub">$18M / $25M — $900K/sem</span>
+              </div>
+              <div class="goal__amt"><strong>72%</strong></div>
+            </div>
+            <div class="goal__bar"><div class="goal__fill" style="width:72%"></div></div>
+          </div>
+          <div class="goal">
+            <div class="goal__top">
+              <div class="goal__ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <div class="goal__meta">
+                <span class="goal__name">iPhone 16 Pro</span>
+                <span class="goal__sub">$2,7M / $6M — $240K/sem</span>
+              </div>
+              <div class="goal__amt"><strong>45%</strong></div>
+            </div>
+            <div class="goal__bar"><div class="goal__fill" style="width:45%;background:linear-gradient(90deg,#818cf8,#c4b5fd)"></div></div>
+          </div>
+          <div class="goal">
+            <div class="goal__top">
+              <div class="goal__ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div class="goal__meta">
+                <span class="goal__name">Fondo de emergencia</span>
+                <span class="goal__sub">$7M / $15M — $600K/sem</span>
+              </div>
+              <div class="goal__amt"><strong>47%</strong></div>
+            </div>
+            <div class="goal__bar"><div class="goal__fill" style="width:47%;background:linear-gradient(90deg,#34d399,#86efac)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature feature--dark security">
+    <div class="feature__num" style="color:rgba(255,255,255,.03);left:50%;transform:translateX(-50%)">04</div>
+    <div class="wrap">
+      <div class="security__head">
+        <span class="sec-tag">Seguridad</span>
+        <h2>Tus datos son<br><span class="text-grad">solo tuyos</span></h2>
+        <p class="lead">Cifrado de nivel bancario. Sin venta de datos. Sin acceso a tu contraseña. Solo tú y tu dinero.</p>
+      </div>
+      <div class="sec-grid">
+        <div class="sec-badge">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>AES-256</h3>
+          <p>Cifrado de nivel bancario en todos tus datos</p>
+        </div>
+        <div class="sec-badge">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><polyline points="9 16 11 18 15 14"/></svg>
+          </div>
+          <h3>Contraseñas protegidas</h3>
+          <p>Tu usuario y clave nunca se almacenan en nuestros servidores.</p>
+        </div>
+        <div class="sec-badge">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <h3>Zero Data Selling</h3>
+          <p>Tus datos nunca se venden a terceros</p>
+        </div>
+        <div class="sec-badge">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>Solo lectura</h3>
+          <p>Nunca movemos dinero, solo analizamos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══ REPORTE WHATSAPP ═══ -->
+<section class="feature wa-feature">
+  <div class="wrap feature__grid feature__grid--reverse">
+    <div class="feature__visual">
+      <div class="wa-phone">
+        <div class="wa-phone__header">
+          <div class="wa-phone__back">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </div>
+          <div class="wa-phone__av">M</div>
+          <div class="wa-phone__info">
+            <span class="wa-phone__name">Monedito</span>
+            <span class="wa-phone__status">en línea</span>
+          </div>
+          <div class="wa-phone__icons">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+          </div>
+        </div>
+        <div class="wa-phone__body">
+          <div class="wa-bubble">
+            <p class="wa-b-title">Reporte semanal · 3–9 jun</p>
+            <div class="wa-b-row">
+              <span>Gastaste</span>
+              <strong>$1.840.000</strong>
+            </div>
+            <div class="wa-b-row wa-b-row--green">
+              <span>Ahorraste</span>
+              <strong>+$1.060.000</strong>
+            </div>
+            <div class="wa-b-sep"></div>
+            <p class="wa-b-sub">Top categorías</p>
+            <div class="wa-b-cat">
+              <div class="wa-b-bar" style="--w:62%;--c:#f87171"></div>
+              <span>Comida</span>
+              <strong>$620.000</strong>
+            </div>
+            <div class="wa-b-cat">
+              <div class="wa-b-bar" style="--w:46%;--c:#fb923c"></div>
+              <span>Hogar</span>
+              <strong>$460.000</strong>
+            </div>
+            <div class="wa-b-cat">
+              <div class="wa-b-bar" style="--w:34%;--c:#fbbf24"></div>
+              <span>Transporte</span>
+              <strong>$345.000</strong>
+            </div>
+            <div class="wa-b-sep"></div>
+            <p class="wa-b-insight">Bajaste 8% vs. la semana pasada.</p>
+            <p class="wa-b-link">Ver detalle en la app →</p>
+            <span class="wa-b-time">08:00</span>
+          </div>
+        </div>
+        <div class="wa-phone__bar">
+          <div class="wa-phone__input">Escribe un mensaje</div>
+          <div class="wa-phone__send">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feature__copy">
+      <span class="sec-tag">Reporte por WhatsApp</span>
+      <h2>Tu semana,<br><span class="text-grad">en tu WhatsApp.</span></h2>
+      <p class="lead">Cada lunes a las 8am, Monedito te manda un resumen directo al WhatsApp. Sin abrir ninguna app, sin recordar nada.</p>
+      <ul class="feature__list">
+        <li>
+          <span class="check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Resumen automático cada semana
+        </li>
+        <li>
+          <span class="check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Categorías, ahorro y alertas en un mensaje
+        </li>
+        <li>
+          <span class="check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Comparte el resumen con tu pareja o contador
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CÓMO FUNCIONA ═══ -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="how__head">
+      <span class="sec-tag">Cómo funciona</span>
+      <h2>Empieza en <span class="text-grad">3 minutos</span></h2>
+      <p class="lead">Sin tarjeta de crédito. Solo descarga, conecta y habla.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">1</div>
+        <div class="step__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <h3>Descarga Monedito</h3>
+        <p>Disponible en iOS y Android. Gratis para siempre en el plan básico.</p>
+        <span class="step__note">App Store · Google Play · Web</span>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <div class="step__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 7V5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"/><circle cx="16" cy="14" r="1.5" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <h3>Conectá tus cuentas</h3>
+        <p>Agrega tus cuentas a mano o por voz. Sin acceso bancario directo.</p>
+        <span class="step__note">Manual o por voz</span>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <div class="step__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+        </div>
+        <h3>Habla con la IA</h3>
+        <p>Solo cuéntale tus gastos. Monedito hace el resto — análisis, metas y reportes automáticos.</p>
+        <span class="step__note">Sin formularios · Sin categorías</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPARACIÓN ═══ -->
+<section class="comparison" id="comparison">
+  <div class="wrap">
+    <div class="cmp__head">
+      <span class="sec-tag">Por qué Monedito</span>
+      <h2>vs. la planilla<br><span class="text-grad">de siempre.</span></h2>
+      <p class="lead">Las planillas se abandonan. Monedito funciona sin necesitar tu disciplina.</p>
+    </div>
+    <div class="cmp__grid">
+      <div class="cmp__col cmp__col--old">
+        <div class="cmp__col-header">Sin Monedito</div>
+        <ul class="cmp__list">
+          <li class="cmp__item cmp__item--no">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            Abres la planilla — si la tienes actualizada
+          </li>
+          <li class="cmp__item cmp__item--no">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            Sumas las celdas a mano
+          </li>
+          <li class="cmp__item cmp__item--no">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            El análisis lo haces tú, si no lo olvidás
+          </li>
+          <li class="cmp__item cmp__item--no">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            Nunca sabes que gastas de más hasta que es tarde
+          </li>
+          <li class="cmp__item cmp__item--no">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            Otra hoja para cada meta de ahorro
+          </li>
+          <li class="cmp__item cmp__item--no">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            La abandonas antes del segundo mes
+          </li>
+        </ul>
+      </div>
+      <div class="cmp__col cmp__col--new">
+        <div class="cmp__col-header">Con Monedito</div>
+        <ul class="cmp__list">
+          <li class="cmp__item cmp__item--yes">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            "Gasté $15.000 en el bus" — registrado al instante
+          </li>
+          <li class="cmp__item cmp__item--yes">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            La IA responde al toque
+          </li>
+          <li class="cmp__item cmp__item--yes">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Reporte automático cada lunes al WhatsApp
+          </li>
+          <li class="cmp__item cmp__item--yes">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            La IA te avisa antes de que suceda
+          </li>
+          <li class="cmp__item cmp__item--yes">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            "Quiero ahorrar $5M para un viaje" — listo
+          </li>
+          <li class="cmp__item cmp__item--yes">
+            <span class="cmp__ico"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Sin esfuerzo = sin abandono
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="pricing__head">
+      <span class="sec-tag">Planes</span>
+      <h2>Simple y <span class="text-grad">sin sorpresas</span></h2>
+      <p class="lead">Empieza gratis, sin tarjeta de crédito. Actualiza cuando quieras.</p>
+    </div>
+    <div class="pricing__grid">
+
+      <div class="plan">
+        <div class="plan__tier">Gratis</div>
+        <div class="plan__price-wrap">
+          <span class="plan__price">$0</span>
+          <span class="plan__period">/ mes · para siempre</span>
+        </div>
+        <p class="plan__desc">Empieza a controlar tu dinero hoy.</p>
+        <ul class="plan__list">
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Registro por voz ilimitado
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Análisis mensual automático
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Hasta 3 metas de ahorro
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Reporte semanal básico
+          </li>
+          <li class="plan__item plan__item--no">
+            <span class="check check--no"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            Alertas inteligentes de gastos
+          </li>
+          <li class="plan__item plan__item--no">
+            <span class="check check--no"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            Reporte automático por WhatsApp
+          </li>
+          <li class="plan__item plan__item--no">
+            <span class="check check--no"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            Exportación CSV / PDF
+          </li>
+        </ul>
+        <a href="#download" class="btn btn--ghost plan__cta">Empezar gratis</a>
+      </div>
+
+      <div class="plan plan--pro">
+        <div class="plan__badge">Más popular</div>
+        <div class="plan__tier">Pro</div>
+        <div class="plan__price-wrap">
+          <span class="plan__price">$9.900</span>
+          <span class="plan__period">/ mes · cancela cuando quieras</span>
+        </div>
+        <p class="plan__desc">Para quienes toman sus finanzas en serio.</p>
+        <ul class="plan__list">
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Todo lo del plan Gratis
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Metas de ahorro ilimitadas
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Alertas inteligentes de gastos
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Reporte automático por WhatsApp
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Exportación CSV / PDF
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Soporte prioritario
+          </li>
+          <li class="plan__item">
+            <span class="check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Historial hasta 3 años
+          </li>
+        </ul>
+        <a href="#download" class="btn btn--primary plan__cta confetti-trigger">Empezar Pro</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq__head">
+      <span class="sec-tag">FAQ</span>
+      <h2>Preguntas <span class="text-grad">frecuentes</span></h2>
+      <p class="lead">Todo lo que necesitas saber antes de empezar.</p>
+    </div>
+    <div class="faq__list">
+      <details class="faq-item">
+        <summary class="faq-q">¿Es realmente gratis para siempre?</summary>
+        <div class="faq-a"><p>Sí. El plan básico no tiene fecha de vencimiento. Sin tarjeta de crédito, sin sorpresas. Solo descarga y empieza.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">¿Cómo funciona el chat de voz?</summary>
+        <div class="faq-a"><p>Simplemente habla en voz alta: "gasté $350 en el súper" o "¿cuánto llevo gastado este mes?". Monedito usa IA para entender tu intención, registrar la transacción y responderte. No hay comandos específicos que memorizar.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">¿Cómo es el reporte de WhatsApp?</summary>
+        <div class="faq-a"><p>Cada semana, Monedito te manda un resumen directo a tu WhatsApp: gastos totales, categorías, ahorro del periodo y un insight personalizado. Llega solo — no tienes que hacer nada, solo activarlo desde la app.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">¿Es seguro conectar mi banco?</summary>
+        <div class="faq-a"><p>100% seguro. Usamos cifrado AES-256 de nivel bancario. Tu usuario y contraseña nunca se almacenan en nuestros servidores. Solo leemos tu historial de transacciones — nunca movemos dinero.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">¿Funciona en iPhone y Android?</summary>
+        <div class="faq-a"><p>Sí, disponible en iOS y Android. También puedes acceder desde cualquier navegador con la versión web. Tus datos se sincronizan en todos tus dispositivos en tiempo real.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">¿Puedo cancelar el plan Pro en cualquier momento?</summary>
+        <div class="faq-a"><p>Por supuesto. Sin permanencia ni penalizaciones. Cancela cuando quieras desde la app en un solo toque. Bajas automáticamente al plan gratuito y conservas todos tus datos históricos.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta" id="download">
+  <div class="wrap">
+    <div class="cta__box">
+      <div class="cta__mark">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </div>
+      <h2>Tu dinero merece<br><span class="text-grad cta__grad">una segunda oportunidad</span></h2>
+      <p class="lead">Únete a la lista de espera. Acceso prioritario en el lanzamiento, gratis para siempre.</p>
+      <div class="cta__email">
+        <form class="cta__form" id="ctaForm" novalidate>
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:0;height:0;overflow:hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
+          <input type="email" placeholder="tu@email.com" autocomplete="email" required />
+          <button type="submit">Unirme a la lista</button>
+        </form>
+        <p class="form-consent form-consent--light">Al suscribirte aceptás nuestra <a href="privacy.html" class="form-consent__link form-consent__link--light">política de privacidad</a>.</p>
+        <p class="cta__form-success" id="ctaSuccess">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+          Listo — te avisamos el día del lanzamiento.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="wrap footer__top">
+    <div class="footer__brand">
+      <a href="#" class="brand" style="color:#fff;margin-bottom:1.25rem">
+        <img src="logo.png" alt="Monedito" class="brand__img" width="30" height="30" style="filter:brightness(1.2)" />
+        <span class="brand__name">monedito</span>
+      </a>
+      <p>Finanzas personales para todos.<br>Hecho con cuidado en Colombia.</p>
+    </div>
+    <div class="footer__col">
+      <h4>Producto</h4>
+      <a href="#features">Funciones</a>
+      <a href="#pricing">Precios</a>
+      <a href="#">Changelog</a>
+    </div>
+    <div class="footer__col">
+      <h4>Empresa</h4>
+      <a href="#">Acerca de</a>
+      <a href="#">Blog</a>
+      <a href="#">Prensa</a>
+    </div>
+    <div class="footer__col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacidad</a>
+      <a href="#">Términos</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 Monedito. Todos los derechos reservados.</span>
+    <div class="footer__social">
+      <a href="#" aria-label="X / Twitter">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.766l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="#" aria-label="TikTok">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.74a8.18 8.18 0 0 0 4.77 1.52V6.8a4.85 4.85 0 0 1-1-.11z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══ VARIANTE A: TOAST (nav CTA) ═══ -->
+<div class="toast" id="signupToast">
+  <div class="toast__head">
+    <span>Avisame cuando esté disponible</span>
+    <button class="toast__close" id="toastClose" aria-label="Cerrar">
+      <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <form class="toast__form" id="toastForm" novalidate>
+    <div aria-hidden="true" style="position:absolute;left:-9999px;width:0;height:0;overflow:hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
+    <input type="email" placeholder="tu@email.com" autocomplete="email" required />
+    <button type="submit">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </form>
+  <p class="form-consent" style="margin-top:.35rem">Al suscribirte aceptás la <a href="privacy.html" class="form-consent__link">política de privacidad</a>.</p>
+  <p class="toast__success" id="toastSuccess">Listo — te avisamos cuando esté disponible.</p>
+</div>
+
+<!-- ═══ VARIANTE C: BANNER INFERIOR (botones CTA final) ═══ -->
+<div class="signup-banner" id="signupBanner">
+  <span class="signup-banner__label">Monedito llega pronto —</span>
+  <form class="signup-banner__form" id="bannerForm" novalidate>
+    <input type="email" placeholder="tu@email.com" autocomplete="email" required />
+    <button type="submit">Notificarme</button>
+  </form>
+  <a href="privacy.html" class="form-consent__link" style="font-size:.65rem;opacity:.55;margin:0 .5rem;white-space:nowrap">Privacidad</a>
+  <p class="signup-banner__success" id="bannerSuccess">Listo — te avisamos el día del lanzamiento.</p>
+  <button class="signup-banner__close" id="bannerClose" aria-label="Cerrar">
+    <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script src="app.js"></script>
+
+<script>
+(function () {
+  var CURRENCIES = {
+    CO: { code: 'COP', locale: 'es-CO', rate: 1000, compact: true },
+  };
+  function detectCountry() { return 'CO'; }
+  function format(usdAbs, cfg) {
+    var val = Math.round(usdAbs * cfg.rate);
+    var opts = { style: 'currency', currency: cfg.code, maximumFractionDigits: 0 };
+    if (cfg.compact && val >= 1000000) { opts.notation = 'compact'; opts.compactDisplay = 'short'; opts.maximumSignificantDigits = 3; }
+    return new Intl.NumberFormat(cfg.locale, opts).format(val);
+  }
+  function applyCurrency(cfg) {
+    if (cfg.code === 'USD' && cfg.rate === 1) return;
+    document.querySelectorAll('[data-usd]').forEach(function (el) {
+      var raw = parseFloat(el.dataset.usd);
+      if (isNaN(raw)) return;
+      var sign = raw < 0 ? '−' : (el.dataset.sign === '+' ? '+' : '');
+      el.textContent = sign + format(Math.abs(raw), cfg);
+    });
+  }
+  var country = detectCountry();
+  var cfg = CURRENCIES[country] || CURRENCIES['CO'];
+  window.MONEDITO_CURRENCY = { country: country, config: cfg };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { applyCurrency(cfg); });
+  } else {
+    applyCurrency(cfg);
+  }
+})();
+</script>
+</body>
+</html>

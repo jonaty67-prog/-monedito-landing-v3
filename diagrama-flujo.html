@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Monedito — Diagrama de flujo</title>
+  <style>
+    @page { size: A4 landscape; margin: 1.2cm 1.5cm; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 9pt;
+      line-height: 1.3;
+      color: #111;
+      background: #fff;
+    }
+
+    /* ── Header ─────────────────────────────── */
+    .hdr {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #884c5d;
+      margin-bottom: 14px;
+    }
+    .hdr__mark {
+      width: 22px; height: 22px;
+      background: #884c5d;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 11pt; font-style: italic;
+      flex-shrink: 0;
+    }
+    .hdr__name  { font-size: 12pt; font-weight: 700; letter-spacing: -.02em; }
+    .hdr__sep   { color: #ddd; }
+    .hdr__sub   { font-size: 8pt; color: #777; }
+    .hdr__date  { margin-left: auto; font-size: 7.5pt; color: #bbb; }
+
+    /* ── Diagram shell ───────────────────────── */
+    .diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Connector lines ─────────────────────── */
+    .vline {
+      width: 1.5px;
+      background: #d0d0d0;
+      margin: 0 auto;
+    }
+
+    /* ── Nodes ───────────────────────────────── */
+    .box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 8px;
+      border: 1.5px solid #e0e0e0;
+      padding: 6px 14px;
+      background: #fff;
+    }
+    .box__t { font-weight: 600; font-size: 9pt; }
+    .box__s { font-size: 7pt; color: #888; margin-top: 1px; font-weight: 400; }
+
+    .box--pill   { border-radius: 99px; }
+    .box--start  { background: #111; border-color: #111; color: #fff; padding: 4px 16px; }
+    .box--main   { background: #884c5d; border-color: #884c5d; color: #fff; min-width: 148px; }
+    .box--hub    {
+      border: 2px solid #884c5d;
+      background: #fff8f9;
+      color: #884c5d;
+      min-width: 172px;
+      padding: 8px 20px;
+    }
+    .box--hub .box__t { font-size: 11pt; font-weight: 700; }
+
+    .box--voice  { border-color: #884c5d; background: #fff0f3; color: #884c5d; }
+    .box--ai     { border-color: #4f6ef7; background: #f0f4ff; color: #4f6ef7; }
+    .box--goals  { border-color: #16a34a; background: #f0fdf4; color: #16a34a; }
+    .box--wa     { border-color: #25d366; background: #f0fef9; color: #128c7e; }
+
+    .box--mini {
+      background: #fafafa;
+      border-color: #e8e8e8;
+      min-width: 136px;
+      max-width: 148px;
+      padding: 5px 9px;
+    }
+    .box--mini .box__t { font-size: 8pt; font-weight: 500; }
+
+    .box--end { background: #16a34a; border-color: #16a34a; color: #fff; padding: 4px 16px; }
+
+    /* ── Fork from hub ───────────────────────── */
+    /* Horizontal bar + 4 individual drops */
+    .fork-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .fork-bar {
+      /* horizontal spanning line */
+      width: 72%;          /* visually bridges the 4 columns */
+      height: 1.5px;
+      background: #d0d0d0;
+    }
+    .fork-drops {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 80%;
+    }
+    .fork-drop {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── Branches grid ───────────────────────── */
+    .branches {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 80%;
+      align-items: start;
+    }
+    .branch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Badges ──────────────────────────────── */
+    .badge {
+      display: inline-block;
+      font-size: 6.5pt;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-top: 5px;
+      letter-spacing: .01em;
+    }
+    .badge--free { background: #dcfce7; color: #166534; }
+    .badge--pro  { background: #fef9c3; color: #854d0e; }
+    .badge--mix  { background: #e0e7ff; color: #3730a3; font-size: 6pt; }
+
+    /* ── Security strip ──────────────────────── */
+    .sec-strip {
+      display: flex;
+      gap: 7px;
+      margin-top: 12px;
+      padding-top: 9px;
+      border-top: 1px dashed #e4e4e4;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .sec-pill {
+      font-size: 7pt;
+      color: #555;
+      background: #f5f5f5;
+      border: 1px solid #eaeaea;
+      border-radius: 6px;
+      padding: 3px 8px;
+    }
+
+    /* ── Print hint (screen only) ────────────── */
+    .hint {
+      margin-top: 10px;
+      font-size: 7.5pt;
+      color: #bbb;
+      text-align: center;
+    }
+    @media print { .hint { display: none; } }
+  </style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr__mark">m</div>
+  <span class="hdr__name">monedito</span>
+  <span class="hdr__sep">—</span>
+  <span class="hdr__sub">Diagrama de flujo · Funcionalidades de usuario</span>
+  <span class="hdr__date">v1.0 · Junio 2026</span>
+</div>
+
+<div class="diagram">
+
+  <!-- START -->
+  <div class="box box--pill box--start"><span class="box__t">Inicio</span></div>
+  <div class="vline" style="height:11px"></div>
+
+  <!-- Download -->
+  <div class="box box--main">
+    <span class="box__t">Descarga Monedito</span>
+    <span class="box__s">iOS · Android · Web — Gratis</span>
+  </div>
+  <div class="vline" style="height:11px"></div>
+
+  <!-- Account -->
+  <div class="box box--main">
+    <span class="box__t">Crea tu cuenta</span>
+    <span class="box__s">Sin tarjeta de crédito</span>
+  </div>
+  <div class="vline" style="height:11px"></div>
+
+  <!-- Hub -->
+  <div class="box box--hub">
+    <span class="box__t">Dashboard Principal</span>
+    <span class="box__s">Centro de control financiero</span>
+  </div>
+
+  <!-- Fork: stem → horizontal bar → 4 drops -->
+  <div class="fork-wrap">
+    <div class="vline" style="height:9px"></div>
+    <div class="fork-bar"></div>
+    <div class="fork-drops">
+      <div class="fork-drop"><div class="vline" style="height:9px"></div></div>
+      <div class="fork-drop"><div class="vline" style="height:9px"></div></div>
+      <div class="fork-drop"><div class="vline" style="height:9px"></div></div>
+      <div class="fork-drop"><div class="vline" style="height:9px"></div></div>
+    </div>
+  </div>
+
+  <!-- Branches -->
+  <div class="branches">
+
+    <!-- Voice -->
+    <div class="branch">
+      <div class="box box--voice" style="min-width:136px;max-width:148px">
+        <span class="box__t">Registro por voz</span>
+      </div>
+      <div class="vline" style="height:7px"></div>
+      <div class="box box--mini"><span class="box__t">Habla en lenguaje natural</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">IA categoriza automáticamente</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">Confirmación instantánea</span></div>
+      <span class="badge badge--free">Gratis · ilimitado</span>
+    </div>
+
+    <!-- AI -->
+    <div class="branch">
+      <div class="box box--ai" style="min-width:136px;max-width:148px">
+        <span class="box__t">Análisis con IA</span>
+      </div>
+      <div class="vline" style="height:7px"></div>
+      <div class="box box--mini"><span class="box__t">Detecta patrones de gasto</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">Identifica duplicados y anomalías</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">Genera insights automáticos</span></div>
+      <span class="badge badge--free">Gratis</span>
+    </div>
+
+    <!-- Goals -->
+    <div class="branch">
+      <div class="box box--goals" style="min-width:136px;max-width:148px">
+        <span class="box__t">Metas de ahorro</span>
+      </div>
+      <div class="vline" style="height:7px"></div>
+      <div class="box box--mini"><span class="box__t">Define meta por voz</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">IA calcula ahorro semanal</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">Seguimiento y alertas de progreso</span></div>
+      <span class="badge badge--mix">3 gratis · ilimitadas en Pro</span>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="branch">
+      <div class="box box--wa" style="min-width:136px;max-width:148px">
+        <span class="box__t">Reporte WhatsApp</span>
+      </div>
+      <div class="vline" style="height:7px"></div>
+      <div class="box box--mini"><span class="box__t">Activa desde la app</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">Llega cada lunes a las 8am</span></div>
+      <div class="vline" style="height:6px"></div>
+      <div class="box box--mini"><span class="box__t">Resumen, categorías e insights</span></div>
+      <span class="badge badge--pro">Solo Plan Pro</span>
+    </div>
+
+  </div>
+
+  <!-- End -->
+  <div class="vline" style="height:11px;margin-top:4px"></div>
+  <div class="box box--pill box--end"><span class="box__t">Finanzas bajo control</span></div>
+
+  <!-- Security -->
+  <div class="sec-strip">
+    <div class="sec-pill">Cifrado AES-256</div>
+    <div class="sec-pill">Sin venta de datos</div>
+    <div class="sec-pill">Solo lectura — sin movimiento de fondos</div>
+    <div class="sec-pill">Cumple Ley 1581 · Colombia</div>
+  </div>
+
+</div>
+
+<p class="hint">
+  Para exportar: Ctrl+P (Win) / Cmd+P (Mac) → Guardar como PDF · Orientación Horizontal · Sin márgenes del navegador
+</p>
+
+</body>
+</html>

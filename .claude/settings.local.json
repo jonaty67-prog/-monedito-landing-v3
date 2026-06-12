@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "Bash(where py *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where node *)",
+      "Bash(where npm *)",
+      "Bash(copy \"C:\\\\Users\\\\Jonathan\\\\Downloads\\\\Gemini_Generated_Image_ustgkeustgkeustg.png\" \"C:\\\\Users\\\\Jonathan\\\\Desktop\\\\monedito landing\\\\logo.png\")",
+      "Bash(cp \"/mnt/c/Users/Jonathan/Downloads/Gemini_Generated_Image_ustgkeustgkeustg.png\" \"/mnt/c/Users/Jonathan/Desktop/monedito landing/logo.png\")",
+      "Bash(npx --version)",
+      "PowerShell(node --version)",
+      "PowerShell(npx --version)",
+      "PowerShell(where.exe powershell 2>$null; where.exe pwsh 2>$null; [System.Environment]::Version)",
+      "Bash(dir \"C:\\\\Users\\\\Jonathan\\\\Desktop\\\\stitch_monedito_oficial\")",
+      "Bash(dir \"C:\\\\Users\\\\Jonathan\\\\Desktop\\\\stitch_monedito_oficial\\\\stitch_monedito_oficial\")",
+      "mcp__Claude_in_Chrome__tabs_context_mcp"
+    ]
+  }
+}
